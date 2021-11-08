@@ -1,11 +1,12 @@
 import React from "react";
-import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import {BrowserRouter as Router,Switch,Route,Redirect} from "react-router-dom";
 import Post from "./post.jsx"
 import PostList from "./postList.jsx"
 import PostPage from "./postPage.jsx"
 import Auth from "./auth.jsx"
 import Header from "./header.jsx"
-import Cabinet from "./cabinet.jsx"
+import UserPage from "./UserPage.jsx"
+import ChangePassword from './changePassword.jsx'
 const Wrapper = ()=>{      
     return(
         <div className="wrapper">
@@ -16,14 +17,17 @@ const Wrapper = ()=>{
                         <PostList/>
                     </Route>  
                     <Route path="/auth">
-                        <Auth/>
+                        {JSON.parse(localStorage.getItem("user")) ? <Redirect to="/UserPage" /> : <Auth/>}
                     </Route> 
-                    <Route path="/cabinet">
-                        <Cabinet/>
+                    <Route path="/UserPage">
+                        <UserPage/>
                     </Route> 
                     <Route path="/post">
                         <Post/>
                     </Route>  
+                    <Route path="/ChangePassword/:email">
+                        <ChangePassword />
+                    </Route>
                     <Route path="/postPage/:id">
                         <PostPage/>
                     </Route>

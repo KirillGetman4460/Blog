@@ -14,6 +14,10 @@ const PagePost = ()=>{
     const deletePost = async()=>{
         try {            
             await axios.post('http://localhost:3000/blog/posts/remove',{id})
+                .then(res => {
+                    history.push('/')
+                    history.go(0)
+                })
         } catch (error) {
             console.log(error);
         } 
@@ -40,9 +44,9 @@ const PagePost = ()=>{
                 <div className="page__post__image">
                     <img src={`${post.image}`} alt="" />
                 </div>
-                <Link to="/">
-                    <button className="btn__delete__post" onClick={()=> deletePost()}> Удалить статью </button>
-                </Link>
+               
+                <button className="btn__delete__post" onClick={()=> deletePost()}> Удалить статью </button>
+                
                 <Link to="/">
             <button className="back__btn">
                 <svg width="24" height="15" viewBox="0 0 24 15" fill="none" xmlns="http://www.w3.org/2000/svg">

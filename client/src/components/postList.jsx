@@ -14,15 +14,14 @@ const PostList = () =>{
     },[])
 
     return(
-        <div className="post__list">
-            
+        <div className="post__list">       
             {postList.map(post =>
                 <Link to={'/postPage/' + post._id} className="post__list__item">
                    
                         <div className="post__list__item__image" style={{background:`url(${post.image}) 0 0/cover no-repeat`}}></div>
                         <div className="post__list__item__title">
                             {post.title}
-                     </div>
+                        </div>
                     
                 </Link>
             )}

@@ -10,10 +10,10 @@ const Post = ()=>{
 
     const test = async() =>{      
         try {
-            await axios.post('http://localhost:3000/blog/posts/post',{title:form.title,desc:form.desc,image:form.image})
-            history.push('/')
+            await axios.post('http://localhost:3000/blog/posts/post',{title:form.title, desc:form.desc, image:form.image})
+                .then(res => history.push('/'))
         } catch (error) {
-            alert(error)
+            console.log(error)
         }      
     } 
     

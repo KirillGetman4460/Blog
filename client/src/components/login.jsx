@@ -2,17 +2,24 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios"
 import { useDispatch} from 'react-redux'
-
+import {useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 const Login = ()=>{
 
     const dispatch = useDispatch()
+
+    const history = useHistory()
 
     const { register, handleSubmit, formState: { errors } } = useForm();
  
     const loginUser = async(data)=>{
         try {
             await axios.post('http://localhost:3000/auth/login',{name:data.name,password:data.password})
-                .then(res => dispatch({ type:"set_user", payload:res.data }))
+                .then(res => {
+                    dispatch({ type:"set_user", payload:res.data })
+                    history.push('/')
+                    history.go(0)
+                })
         } catch (error) {
             console.log(error);
         }
@@ -35,7 +42,7 @@ const Login = ()=>{
                     })} />
                     {errors.name?.type === 'required' && <span className="error__message">Пароль обязательный</span>} 
                 </label>
-                <span className="forget__password">Забыли пароль?</span>    
+                 
                 <button type="submit" form="hook-form" className="login__btn__submit">
                     Войти
                 </button>

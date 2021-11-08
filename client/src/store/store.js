@@ -1,13 +1,13 @@
 import { createStore } from 'redux'
 
 const defaultState = { 
-    
+    user: JSON.parse(localStorage.getItem("user")) || {}, 
 }
 
 const counterReducer = (state = defaultState, action)=>{
     switch(action.type){    
         case "set_user":
-            return localStorage.setItem('user',JSON.stringify(action.payload));
+            return {...state, user: localStorage.setItem('user',JSON.stringify(action.payload))};
         default:
           return state
       }

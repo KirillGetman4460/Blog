@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
-body,html,input,button{
+body,html,input,button,a{
     font-family: 'Roboto', sans-serif;
 }
-
+input{
+    outline: none;
+}
 body{
     margin: 0px;
+    position: relative;
+    background: #EEF5FF;
 }
-html { height: 100%; }
+html { height: 100%; }  
 body { height: 100%; }
 h1,h2,h3,h4,h5,h6{
     padding:0px;
@@ -23,10 +27,6 @@ li{
 ul{
     margin: 0px;
     padding: 0px;
-}
-#root{
-    height: 100%;
-    background: #EEF5FF;
 }
 
 .post__form label{
@@ -163,7 +163,7 @@ textarea {
 .post__list{
     display: flex;
     flex-wrap: wrap;    
-    
+    justify-content: space-between;
     max-width: 1110px;
     margin: 0px auto;
 }   
@@ -171,9 +171,10 @@ textarea {
     margin-top: 50px;
 
     border-radius: 0px 0px 15px 15px;
-    flex: 0 1 31.5%;
+    flex: 0 1 31%;
     height:270px;
     transition: 0.2s ease-in-out;
+    
 }
 .post__list__item:hover{
     transform: scale(1.1);
@@ -184,18 +185,15 @@ textarea {
     border-radius: 15px 15px 0px 0px;
 }
 .post__list__item__title{
-    font-weight: 500;
-    font-size: 18px;
+    font-weight: 700;
+    font-size: 16px;
     line-height: 21px;
     color: #3260A1;
     padding:15px 20px;
     background: #FEFEFE;
     border-radius: 0px 0px 15px 15px;
 }
-.post__list__item:nth-child(3n+2){
-    margin:0px 30px;
-    margin-top: 50px;
-}
+
 .page__post__conteiner{
     display: flex;
     justify-content: space-between;
@@ -271,8 +269,9 @@ textarea {
     background: #FFFFFF;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
     border-radius: 5px;
-    margin-top: 70px;
+    margin-top: 130px;
     padding:40px 48px;
+    border-radius: 15px;
 }
 .list__auth{
     display: flex;
@@ -285,6 +284,7 @@ textarea {
     width:190px;
     background: #67BFFF;
     padding:12px 0px;
+    border-radius: 15px;
 }
 .list__auth__link {
     color: #fff;
@@ -296,10 +296,11 @@ textarea {
 .login__title{
     text-align: center;
     font-weight: 300;
-    font-size: 36px;
+    font-size: 40px;
     line-height: 48px;
     padding-top: 40px;
 }
+
 .register__title{
     text-align: center;
     font-weight: 300;
@@ -350,7 +351,210 @@ textarea {
     font-size: 16px;
     cursor: pointer;
     text-transform: uppercase;
+    border-radius: 15px;
 }
-.avatar img{
-    width: 100px;
+.user__page__avatar{
+    height: 230px;
+    width: 230px;
+    border-radius: 25%;
+    margin:0px auto;
+}
+.account svg{
+    width: 21px;
+    height: 21px;   
+}
+.user__page{
+    margin:0px auto;
+    max-width: 270px;
+}
+.user__page__title{
+    text-align: center;
+    padding:40px 0px;
+    font-size: 42px;
+    color: #3260A1;
+}
+.user__page__name{
+    padding:10px 0px;
+}
+.change__avatar__btn{
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+    padding:5px;
+    font-weight: 700;
+}
+.forgetPassword__title{
+    max-width: 210px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    text-transform: uppercase;  
+    padding-top:20px;
+    padding-bottom:15px;
+}
+.forgetPassword__form__input{
+    background: #F7F7F8;
+    border: none;
+    color: #9E9E9E;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    padding:12px 16px;
+    margin:24px 0px;
+    border-bottom: 1px solid #D8DBE0;
+    width:94%;
+}
+.forget__password{
+    padding-bottom:12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.forgetPassword__form__btn{
+    font-size: 16px;
+    padding:12px 34px;  
+    cursor: pointer;
+    text-transform: uppercase;
+    color: #fff;
+    background:#67BFFF;
+    border: none;
+    font-weight: 700;
+}
+.change__password__input{
+    background: #F7F7F8;
+    border: none;
+    color: #9E9E9E;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    padding:12px 16px;
+    margin:24px 0px;
+    border-bottom: 1px solid #D8DBE0;
+    width:91%;
+}
+.change__password__bnt{
+    font-size: 16px;
+    padding:12px 34px;  
+    cursor: pointer;
+    text-transform: uppercase;
+    color: #fff;
+    background:#67BFFF;
+    border: none;
+    font-weight: 700;
+    width: 100%;
+}
+.change__password__conteiner{
+    max-width: 400px;
+    margin: 0px auto;
+    background:#fff;
+}
+.change__password__content{
+    padding: 40px 48px;
+    margin-top: 70px;
+}
+
+.successful-registration{
+    transition: 0.2s all ease;
+    display: flex;  
+    align-items: center;
+    position:absolute;
+    z-index: 50;
+    top: 0;
+    height:100%;
+    width:100%;
+    left:0;
+    right: 0;
+    background-color: rgba(17,24,39,0.7 );
+}
+.successful-registration__conteiner{
+    box-shadow: 0px 0px 16px rgb(0 0 0 / 8%);
+    width: 32rem;
+    margin: 0px auto;
+    background: #fff;
+    margin-bottom: 2rem;
+    border-radius: 15px;
+    
+}
+.successful-registration__content{
+    display: flex;
+   
+}
+.successful-registration__conteiner{
+    position: relative;
+    padding:28px;
+}
+.successful-registration__bnt__close{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    padding-top: 1rem;
+    padding-right: 1rem;
+}
+.successful-registration__icon{
+    padding-right: 10px;
+}
+.successful-registration__btn{
+    text-align: right;
+}
+.successful-registration__btn a{
+    text-transform: uppercase;
+    padding:6px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #67BFFF;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.successful-registration__message{
+    font-weight: 550;
+    font-size: 14px;
+}
+.successful-registration__title{
+    padding-bottom: 8px;
+    font-weight: 700;
+    color: #67BFFF;
+}
+
+@media(max-width:1136px){
+    .post__list{
+        padding:0px 12px;
+    }
+    .header__conteiner{
+        padding:17px 12px;
+    }
+}
+@media(max-width:998px){
+    .post__list__item{
+        flex: 0 1 47%;
+    }
+    .post__list{
+       justify-content: space-around;
+    }
+}
+@media(max-width:700px){
+    .page__post__conteiner{
+        flex-direction: column;
+    }
+    .page__post__text{
+        padding-bottom: 25px;
+    }
+}
+
+@media(max-width:520px){
+    .post__list__item{
+        flex: 0 1 100%;
+    }
+    .list__auth{
+        flex-direction: column;
+    }
+    .list__auth__link {
+        width:100%;
+        margin: 12px 0px;
+    }
+    .auth__conteiner{
+        padding: 20px 30px;
+        margin-top: 40px;
+        margin-bottom: 30px;
+    }
 }

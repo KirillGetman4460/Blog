@@ -1,8 +1,8 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import {Switch,Route,Link,useRouteMatch} from "react-router-dom";
 import Login from "./login.jsx"
 import Register from "./register.jsx"
-import axios from "axios"
+
 const Auth = ()=>{
     let { path, url } = useRouteMatch();
     
@@ -20,6 +20,8 @@ const Auth = ()=>{
                     <Route path={`${path}/register`}>
                         <Register />
                     </Route>
+                   
+                    
                 </Switch>
             </div>
            
