@@ -1,39 +1,14 @@
 const Router = require('express')
-const Post = require('../models/modelsPost')
 
+const blogController = require('../controllers/blog-controller');
 const router = new Router()
 
-router.post('/post', async(req, res) => {
-    try {
-        const {title,desc,image} = req.body;
+router.post('/post', blogController.addPost)
 
-        const post = await new Post({title,desc,image})
+router.get('/postlist',blogController.postList)
 
-        await post.save()
+router.get('/post/:id', blogController.pagePost)
 
-        return res.json({message:"Post was created"})
-
-    } catch (error) {
-        res.send({message: "Error"})
-    }
-})
-
-router.get('/postlist',async(req, res) => {
-    res.send(await Post.find())
-})
-
-router.get('/post/:id', async(req, res) => {
-    const {id} = req.params
-
-    const post = await Post.findById(id)
-
-    res.send(post)
-})
-
-router.post("/remove", async(req, res) => {
-    await Post.findByIdAndDelete({_id:req.body.id})
-})
-
-
+router.post("/remove", blogController.removePost)
 
 module.exports = router

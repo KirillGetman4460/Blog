@@ -1,99 +1,49 @@
 const Router = require('express')
-const Role = require('../models/modelRole')
-const User = require('../models/modelUser')
-const bcrypt = require('bcryptjs');
-const {validationResult} = require('express-validator')
-const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer')
 const { check } = require('express-validator');
-const {secret} = require('../config');
 const router = new Router()
 const authMiddleware = require('../middleware/authMiddleware')
 const adminMiddleware = require('../middleware/adminMiddleware')
 const uploadMiddleware = require('../middleware/uploadMiddleware')
-const generateAccessToken = (user) => {// функция для генерации токена
-    const payload = {
-        user
-    }
-    return jwt.sign(payload,secret,{expiresIn:"24h"})
-} 
+const authController = require('../controllers/auth-controller');
 
 router.post('/register', [
         check('name').notEmpty().withMessage('Имя пользователя не должно быть пустым'),
         check('password').isLength({min:4,max:10}).withMessage('Пароль должен быть больше 4 и меньше 10 символов')
-    ],
-    async(req, res) => {//router для регистрации
-    try {
+],authController.register)
+
+router.post('/login', authController.login)
+
+router.post('/upload',uploadMiddleware.single('avatar'),authController.upload)//router для загруски новой аватарки
+
+router.get('/users',adminMiddleware("ADMIN"),authController.users)//router для получение пользователей
+
+router.get("/user",authMiddleware,authController.user)
+
+router.post("/sentEmail",(req, res) => {
+        const {email} = req.body
         
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });         
-        }
-        //водные данные 
-        const {name,email,password} = req.body;
+        const transporter = nodemailer.createTransport({
+            service:"gmail",
+            auth:{
+                user:"kutuzovmaksim14@gmail.com",
+                pass:"fuckyou228"
+            }
+        });
+        console.log(email);
+        const info = {
+            from: 'kutuzovmaksim14@gmail.com', // sender address
+            to: email, // list of receivers
+            subject: "Изменение пароля", // Subject line
+            html:`<div><a href="http://localhost:8080/ChangePassword">Передите по ссылке</a></div>`
+        };
 
-        //проверка на совпадение пользователей
-        const candidate = await User.findOne({name})
-
-        if(candidate){//если совпадение найдено
-            return res.status(400).json({message:"Пользователь с таким именем уже существует"})//вывод сообщение, что такой пользователь уже существует
-        }
-            const hashPassword = bcrypt.hashSync(password, 1);//кэшируем пароль
-            const userRole = await Role.findOne({value:"USER"})//добавляем роль новому пользователю
-            const user = await new User({name, email,password:hashPassword,roles:[userRole.value]})//создаем нового пользователя
-            await user.save()//сохроняем в базу данных  
-        
-        return res.json({message: "Пользователь успешно зарегистрирован"})
-    } catch (error) {
-        return res.json({message: error})
-    }
+        transporter.sendMail(info, (err, data) =>{
+            err ? console.log(err) : console.log("email sent")
+        })        
 })
-
-router.post('/login', async(req,res) => {//router для логина
-    try {
-        const {name,password} = req.body;
-
-        const user = await User.findOne({name})
-
-        const validPassword = bcrypt.compareSync(password, user.password)
-
-        if(!validPassword){//если пароль не веный
-            return res.json({message: "Пароль не верный"})
-        }
-        
-        const token = generateAccessToken(user)//генерируем новый token
-        return res.json({token}) 
-     
-    } catch (error) {
-        res.json({message: error})  
-    }
-})
-
-router.post('/upload',uploadMiddleware.single('image'),(req,res) => {
-    try {
-        //const token = req.headers.authorization;
-       // const decodedData = jwt.verify(token,secret)
-        res.send(req.file)
-        
-        //console.log(await User.findById(decodedData.user._id));      
-    } catch (error) {
-        res.json({message: error})
-    }
-})
-
-router.get('/users',adminMiddleware("ADMIN"),async(req, res) => {//router для получение пользователей
-    try {
-        res.send(await User.find())
-    } catch (error) {
-        res.json({message: error})
-    }
-})
-
-router.get("/user",authMiddleware,async(req, res) => {
-    try { 
-        res.send(await User.findById(req.user.user._id))         
-    } catch (error) {
-        return res.json({message: error})
-    }
+router.get('/change-password:email',async(req,res) =>{
+    console.log(req.params);
 })
 
 module.exports = router

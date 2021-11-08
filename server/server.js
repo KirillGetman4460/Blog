@@ -13,7 +13,7 @@ app.use(middleware)
     
 app.use(express.json())
 
-app.use('/images', express.static(path.join(__dirname,"images")))
+app.use('/avatar', express.static(path.join(__dirname,"avatar")))
 
 app.use("/blog/posts",routerPost)
 
@@ -34,4 +34,3 @@ const start = async () => {
 }
 
 start()
-
