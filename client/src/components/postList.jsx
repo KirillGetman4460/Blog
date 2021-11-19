@@ -1,21 +1,19 @@
-import React,{useState,useEffect} from "react";
+import React,{useEffect} from "react";
 import {Link} from "react-router-dom";
-import axios from "axios";
+import {useSelector,useDispatch} from 'react-redux'
+
 const PostList = () =>{
-    
-    const[postList,setPostList] = useState([]);
 
-    useEffect(async() =>{
+    const dispatch = useDispatch()
 
-        await axios.get("http://localhost:3000/blog/posts/postlist")
-            .then(res => setPostList(res.data))
-            .catch(err => console.log(err)) 
+    const posts = useSelector(state => state.posts)
 
+    useEffect(() =>{
+        dispatch({type:"GET_POSTS"})
     },[])
-
     return(
-        <div className="post__list">       
-            {postList.map(post =>
+        <div className="post__list">             
+            {posts.map(post =>
                 <Link to={'/postPage/' + post._id} className="post__list__item">
                    
                         <div className="post__list__item__image" style={{background:`url(${post.image}) 0 0/cover no-repeat`}}></div>

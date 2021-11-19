@@ -7,7 +7,10 @@ import Auth from "./auth.jsx"
 import Header from "./header.jsx"
 import UserPage from "./UserPage.jsx"
 import ChangePassword from './changePassword.jsx'
-const Wrapper = ()=>{      
+import { createBrowserHistory } from 'history';
+
+const Wrapper = ()=>{  
+   // const history = creactBrowserHistory()    
     return(
         <div className="wrapper">
             <Router>

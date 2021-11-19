@@ -1,19 +1,17 @@
 import React,{useState,useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import {useSelector} from "react-redux"
-//import Avatar from './images/default-avatar.png'
 import axios from "axios"
+
 const UserPage = () =>{
 
     const[userInfo,setUser] = useState({});
 
     const[file,setFile] = useState()
 
-    //const user = JSON.parse(localStorage.getItem("user"));
-
     const[active,setActive] = useState(false)
 
-    const user = useSelector(state => state.user)
+    const {token} = useSelector(state => state.user)
     
     const history = useHistory()
 
@@ -39,12 +37,11 @@ const UserPage = () =>{
 
     useEffect(async()=>{
         try {
-            await axios.get('http://localhost:3000/auth/user',{headers: {Authorization:`Bearer ${user.token}`}})
+            await axios.get('http://localhost:3000/auth/user',{headers: {Authorization:`Bearer ${token}`}})
                 .then(res => setUser(res.data))           
         } catch (error) {
             console.log(error);
         }  
-        console.log( users);
     },[])
     const logoutuUser = () =>{
         localStorage.removeItem('user')
@@ -53,7 +50,7 @@ const UserPage = () =>{
     }
     useEffect(async()=>{
         try {
-            await axios.get('http://localhost:3000/auth/users',{headers: {Authorization:`Bearer ${user.token}`}})
+            await axios.get('http://localhost:3000/auth/users',{headers: {Authorization:`Bearer ${token}`}})
                       
         } catch (error) {
             console.log(error);

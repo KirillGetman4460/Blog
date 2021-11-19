@@ -4,7 +4,7 @@ import Login from "./login.jsx"
 import Register from "./register.jsx"
 
 const Auth = ()=>{
-    let { path, url } = useRouteMatch();
+    const { path, url } = useRouteMatch();
     
     return(
         <div className="auth">
@@ -19,9 +19,7 @@ const Auth = ()=>{
                     </Route>
                     <Route path={`${path}/register`}>
                         <Register />
-                    </Route>
-                   
-                    
+                    </Route>                 
                 </Switch>
             </div>
            

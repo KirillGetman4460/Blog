@@ -1,16 +1,25 @@
-import { createStore } from 'redux'
+import { createStore,applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from './saga.js';
+const sagaMiddleware = createSagaMiddleware()
 
 const defaultState = { 
-    user: JSON.parse(localStorage.getItem("user")) || {}, 
+    user: JSON.parse(localStorage.getItem("user")) || {},
+    posts:[]
 }
 
-const counterReducer = (state = defaultState, action)=>{
+const reducer = (state = defaultState, action)=>{
     switch(action.type){    
-        case "set_user":
+        case "SET_USER":
             return {...state, user: localStorage.setItem('user',JSON.stringify(action.payload))};
+        case 'SET_POSTS':
+            return {...state, posts: [...state.posts, ...action.payload]}
         default:
           return state
       }
 }
-let store = createStore(counterReducer)
+
+let store = createStore(reducer,applyMiddleware(sagaMiddleware))
+sagaMiddleware.run(rootSaga)
+
 export default store;

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios"
 import { useDispatch} from 'react-redux'
 import {useHistory} from "react-router-dom";
-import {Link} from "react-router-dom";
+
 const Login = ()=>{
 
     const dispatch = useDispatch()
@@ -11,12 +11,12 @@ const Login = ()=>{
     const history = useHistory()
 
     const { register, handleSubmit, formState: { errors } } = useForm();
- 
+   
     const loginUser = async(data)=>{
         try {
             await axios.post('http://localhost:3000/auth/login',{name:data.name,password:data.password})
                 .then(res => {
-                    dispatch({ type:"set_user", payload:res.data })
+                    dispatch({ type:"SET_USER", payload:res.data})
                     history.push('/')
                     history.go(0)
                 })
